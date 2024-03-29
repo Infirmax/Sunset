@@ -15,6 +15,8 @@ import com.bignerdranch.android.sunset.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var isSunset = true
+
 
     private val blueSkyColor: Int by lazy {
         ContextCompat.getColor(this, R.color.blue_sky)
@@ -32,9 +34,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.scene.setOnClickListener {
-            val animatorSet = AnimatorSet()
-            animatorSet.playSequentially(startAnimation(), reverseAnimation())
-            animatorSet.start()
+            if (isSunset) {
+                startAnimation() // Execute sunset animation
+            } else {
+                reverseAnimation() // Execute sunrise (reverse) animation
+            }
+
+            isSunset = !isSunset
         }
 
     }
